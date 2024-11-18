@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +17,28 @@
             border: 0;
             
         }
+        #login_but{
+            background-color: rgb(70, 136, 172);
+            color: white;
+        }
+        #login_but, #signup_but:hover{
+            cursor: pointer;
+        }
+        .content{
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
-    <div class="greeting">
-        <h1></h1>
-    </div>
-    <div class="linkButtons">
-        <button>Login</button>
-        <button>Sign Up</button>
+    <div class="content">
+        <div class="greeting">
+            <h2>Welcome to</h2>
+            <h2>Dream Team's Nursing Home</h2>
+        </div>
+        <div class="linkButtons">
+            <button id="login_but" onclick="window.location.href = '<?php echo route('login'); ?>'">Login</button>
+            <button id="signup_but" onclick="window.location.href = '<?php echo route('signup'); ?>'">Sign Up</button>
+        </div>
     </div>
 </body>
 </html>
