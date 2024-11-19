@@ -49,8 +49,8 @@
             <h1>Dream Team's Nursing Home</h1>
         </div>
         <div class="linkButtons">
-            <button id="login_but" onclick="window.location.href = '<?php echo route('login'); ?>'">Login</button>
-            <button id="signup_but" onclick="window.location.href = '<?php echo route('signup'); ?>'">Sign Up</button>
+            <button id="login_but" onclick="window.location.href = '<?php echo route('login.index'); ?>'">Login</button>
+            <button id="signup_but" onclick="window.location.href = '<?php echo route('signup.index'); ?>'">Sign Up</button>
         </div>
     </div>
 </body>
