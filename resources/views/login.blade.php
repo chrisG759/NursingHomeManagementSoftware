@@ -11,5 +11,11 @@
 </head>
 <body>
     <h1>Login</h1>
+    <form action="" method="POST">
+        @csrf
+        Email: <input type="text" name="email">
+        Password: <input type="text" name="password">
+        <input type="submit" name="submit">
+    </form>
 </body>
 </html>
