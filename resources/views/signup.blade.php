@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Nursing Home Management</title>
     <style>
-        /* Basic styling for the form */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -86,7 +85,6 @@
             <fieldset>
                 <legend>Create Account</legend>
 
-                <!-- Basic user details -->
                 <label for="role">Role:</label>
                 <select id="role" name="role" onchange="togglePatientFields()">
                     <option value="admin">Admin</option>
@@ -117,7 +115,6 @@
                 <label for="confirm_password">Confirm Password:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required><br>
 
-                <!-- Fields specific to Patient role -->
                 <div id="patientFields" class="hidden">
                     <label for="family_code">Family Code:</label>
                     <input type="text" id="family_code" name="family_code"><br>
@@ -135,19 +132,17 @@
     </div>
 
     <script>
-        // Function to toggle visibility of fields based on selected role
         function togglePatientFields() {
             var role = document.getElementById("role").value;
             var patientFields = document.getElementById("patientFields");
 
             if (role === "patient") {
-                patientFields.classList.remove("hidden"); // Show Patient-specific fields
+                patientFields.classList.remove("hidden"); 
             } else {
-                patientFields.classList.add("hidden"); // Hide Patient-specific fields
+                patientFields.classList.add("hidden"); 
             }
         }
 
-        // Initially hide patient-specific fields if not selected
         window.onload = togglePatientFields;
     </script>
 
