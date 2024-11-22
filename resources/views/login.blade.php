@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form action="" method="POST">
+    <form action="{{ route('login.store') }}" method="POST">
         @csrf
         Email: <input type="text" name="email">
         Password: <input type="text" name="password">
