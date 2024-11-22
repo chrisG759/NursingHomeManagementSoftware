@@ -19,6 +19,8 @@ class SignupAPI
      */
     public function store(Request $request)
     {
-        // Handle the registration logic
+        $validate = [
+            $request->all();
+        ];
     }
 }
