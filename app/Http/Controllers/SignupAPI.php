@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employees;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class SignupAPI
@@ -19,8 +21,10 @@ class SignupAPI
      */
     public function store(Request $request)
     {
-        $validate = [
-            $request->all();
-        ];
+       $employee = new Employees();
+       
+       $employee = [
+            ''
+       ]
     }
 }

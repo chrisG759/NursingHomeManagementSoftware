@@ -106,9 +106,6 @@
                 <label for="phone">Phone:</label>
                 <input type="tel" id="phone" name="phone" required><br>
 
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required><br>
-
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
 
@@ -132,18 +129,19 @@
     </div>
 
     <script>
-        function togglePatientFields() {
+       function togglePatientFields() {
             var role = document.getElementById("role").value;
             var patientFields = document.getElementById("patientFields");
 
-            if (role === "patient") {
-                patientFields.classList.remove("hidden"); 
+            if (role == "patient") {
+                patientFields.classList.remove("hidden"); // Show patient fields
             } else {
-                patientFields.classList.add("hidden"); 
+                patientFields.classList.add("hidden"); // Hide patient fields
             }
         }
 
-        window.onload = togglePatientFields;
+        window.onload = togglePatientFields();
+
     </script>
 
 </body>
