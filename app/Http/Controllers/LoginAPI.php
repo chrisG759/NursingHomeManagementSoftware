@@ -31,8 +31,11 @@ class LoginAPI
             ->where('email', $validated['email'])
             ->first();
 
+
         if ($employee && ($validated['password'] == $employee->password)){
-            return '<p>record found</p>';
+            if($employee->role == 'Admin'){
+                return redirect(route('admin.index'));
+            }
         } else {
             return '<p>no record found</p>';
         }
