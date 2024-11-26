@@ -35,6 +35,8 @@ class LoginAPI
         if ($employee && ($validated['password'] == $employee->password)){
             if($employee->role == 'Admin'){
                 return redirect(route('admin.index'));
+            } else if($employee->role == 'Doctor'){
+                return redirect(route('doctor.index'));
             }
         } else {
             return '<p>no record found</p>';
