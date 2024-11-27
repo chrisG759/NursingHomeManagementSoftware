@@ -12,7 +12,7 @@ class AdminAPI
      */
     public function index()
     {
-        //
+        return view('registrationApproval');
     }
 
     /**

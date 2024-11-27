@@ -52,46 +52,6 @@
             <button type="submit" class="btn btn-primary">Schedule Appointment</button>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        document.getElementById('patient_id').addEventListener('blur', function() {
-            const patientId = this.value;
-
-            fetch(`/api/patient/${patientId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById('patient_name').value = data.patient.name;
-                    } else {
-                        alert('Patient not found');
-                        document.getElementById('patient_name').value = '';
-                    }
-                })
-                .catch(error => console.error('Error fetching patient:', error));
-        });
-        document.getElementById('appointment_date').addEventListener('change', function() {
-            const date = this.value;
-
-            fetch(`/api/roster/doctors?date=${date}`)
-                .then(response => response.json())
-                .then(data => {
-                    const doctorSelect = document.getElementById('doctor_id');
-                    doctorSelect.innerHTML = '<option value="" selected disabled>Select a Doctor</option>';
-
-                    if (data.success) {
-                        data.doctors.forEach(doctor => {
-                            const option = document.createElement('option');
-                            option.value = doctor.id;
-                            option.textContent = doctor.name;
-                            doctorSelect.appendChild(option);
-                        });
-                    } else {
-                        alert('No doctors available on this date');
-                    }
-                })
-                .catch(error => console.error('Error fetching doctors:', error));
-        });
-    </script>
+   
 </body>
 </html>

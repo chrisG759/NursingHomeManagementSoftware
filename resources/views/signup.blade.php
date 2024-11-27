@@ -74,14 +74,16 @@
         <h1>Register for Nursing Home Management System</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ route('login.index') }}">Login</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
-        <form action="register_process.php" method="POST" id="registerForm">
+        <form action="{{ route('signup.store') }}" method="POST" id="registerForm">
+            @csrf
+            @method('POST')
             <fieldset>
                 <legend>Create Account</legend>
 
@@ -104,16 +106,13 @@
                 <input type="email" id="email" name="email" required><br>
 
                 <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" required><br>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required><br>
+                <input type="tel" id="phone" name="phoneNumber" required><br>
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br>
 
                 <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required><br>
+                <input type="password" id="confirm_password" name="password_confirmation" required><br>
 
                 <div id="patientFields" class="hidden">
                     <label for="family_code">Family Code:</label>
@@ -137,9 +136,9 @@
             var patientFields = document.getElementById("patientFields");
 
             if (role === "patient") {
-                patientFields.classList.remove("hidden"); 
+                patientFields.classList.remove("hidden"); // Show patient fields
             } else {
-                patientFields.classList.add("hidden"); 
+                patientFields.classList.add("hidden"); // Hide patient fields
             }
         }
 

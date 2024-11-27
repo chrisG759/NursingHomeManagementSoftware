@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class LoginAPI
@@ -21,7 +22,25 @@ class LoginAPI
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
+        $employee = DB::table('employees')
+            ->where('email', $validated['email'])
+            ->first();
+
+
+        if ($employee && ($validated['password'] == $employee->password)){
+            if($employee->role == 'Admin'){
+                return redirect(route('admin.index'));
+            } else if($employee->role == 'Doctor'){
+                return redirect(route('doctor.index'));
+            }
+        } else {
+            return '<p>no record found</p>';
+        }
     }
 
     /**
