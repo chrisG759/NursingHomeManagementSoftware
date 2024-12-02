@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Post;
 
+use function Pest\Laravel\post;
 
 class LoginAPI
 {
@@ -14,6 +16,7 @@ class LoginAPI
      */
     public function index()
     {
+        $_POST['loginInvalid'] = false;
         return view('login');
     }
 
@@ -22,6 +25,8 @@ class LoginAPI
      */
     public function store(Request $request)
     {
+        
+
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string'
@@ -37,9 +42,12 @@ class LoginAPI
                 return redirect(route('admin.index'));
             } else if($employee->role == 'Doctor'){
                 return redirect(route('doctor.index'));
+            } else if($employee->role == 'Patient'){
+                return redirect(route('patient.index'));
             }
         } else {
-            return '<p>no record found</p>';
+            $_POST['loginInvalid'] = true;
+            return view('login');
         }
     }
 

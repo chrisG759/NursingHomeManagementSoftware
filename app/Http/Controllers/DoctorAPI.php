@@ -12,7 +12,7 @@ class DoctorAPI
      */
     public function index()
     {
-        return view('DoctorAppointment');
+        return view('DoctorHome');
     }
 
     /**

@@ -68,6 +68,10 @@ input[type="submit"] {
 input[type="sumbit"]:hover {
     background-color: #0062cc; 
 }
+#invalidLogin{
+    color: red;
+    margin-bottom: 12px;
+}
     </style>
 </head>
 <body>
@@ -80,6 +84,9 @@ input[type="sumbit"]:hover {
             <input type="text" name="email" placeholder="Enter your email">
             <label for="password">Password:</label>
             <input type="password" name="password" placeholder="Enter your password">
+            @if ($_POST['loginInvalid'] == true)
+                <p id="invalidLogin">Invalid Login</p>   
+            @endif
             <div class="check">
                 <input type="checkbox" name="remember">
                 <label for="remember">Remember Me</label>
