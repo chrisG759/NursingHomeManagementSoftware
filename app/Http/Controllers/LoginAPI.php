@@ -16,6 +16,22 @@ class LoginAPI
      */
     public function index()
     {
+        if(isset($_COOKIE['userInfo'])){
+            $employee = DB::table('employees')
+            ->where('email', $_COOKIE['userInfo'])
+            ->first();
+
+            if($employee){
+                if($employee->role == 'Admin'){
+                    return redirect(route('admin.index'));
+                } else if($employee->role == 'Doctor'){
+                    return redirect(route('doctor.index'));
+                } else if($employee->role == 'Patient'){
+                    return redirect(route('patient.index'));
+                }
+            }
+        }
+
         $_POST['loginInvalid'] = false;
         return view('login');
     }
@@ -26,7 +42,6 @@ class LoginAPI
     public function store(Request $request)
     {
         
-
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string'
@@ -38,6 +53,12 @@ class LoginAPI
 
 
         if ($employee && ($validated['password'] == $employee->password)){
+
+            if ($request->has('remember')) {
+                setcookie('userInfo', $validated['email'], time() + (86400), "/"); 
+            }
+
+
             if($employee->role == 'Admin'){
                 return redirect(route('admin.index'));
             } else if($employee->role == 'Doctor'){
