@@ -133,7 +133,6 @@
             </tbody>
         </table>
 
-        <!-- Patient Group Table -->
         <h2 style="text-align: center; margin-top: 40px;">Patient Group</h2>
         <table class="roster-table">
             <thead>
@@ -165,7 +164,7 @@
     </div>
 
     <script>
-        // Function to update date value dynamically
+
         function updateDate() {
             const selectedDate = document.getElementById("date").value;
             console.log("Selected Date: ", selectedDate);
