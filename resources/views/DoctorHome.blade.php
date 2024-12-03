@@ -26,7 +26,6 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Welcome, Dr. {{ auth()->user()->name }}</h1>
         <h3>Today's Patients</h3>
 
          <form id="search-form" class="mb-4">
@@ -64,7 +63,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="patient-list">
+            {{-- <tbody id="patient-list">
                  <tr>
                     <td>{{ name }}</td>
                     <td>{{ appointment_date }}</td>
@@ -75,7 +74,7 @@
  
                 </tr>
                 
-            </tbody>
+            </tbody> --}}
         </table>
 
 

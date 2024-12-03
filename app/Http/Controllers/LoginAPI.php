@@ -52,23 +52,31 @@ class LoginAPI
             ->first();
 
 
-        if ($employee && ($validated['password'] == $employee->password) && ($employee->isValid == true)){
+        if ($employee && ($validated['password'] == $employee->password) && $employee->isValid == true){
 
             if ($request->has('remember')) {
                 setcookie('userInfo', $validated['email'], time() + (86400), "/"); 
             }
 
 
-            if($employee->role == 'Admin'){
-                return redirect(route('admin.index'));
-            } else if($employee->role == 'Doctor'){
+            
+            if($employee->role == 'Doctor'){
                 return redirect(route('doctor.index'));
             } else if($employee->role == 'Patient'){
                 return redirect(route('patient.index'));
+            } else if($employee->role == 'Caregiver'){
+                return redirect(route('caregiver.index'));
+            } else if($employee->role == 'Supervisor'){
+                return redirect(route('supervisor.index'));
             }
         } else {
-            $_POST['loginInvalid'] = true;
-            return view('login');
+            if($employee->role == 'Admin'){
+                return redirect(route('admin.index'));
+            } else{
+                $_POST['loginInvalid'] = true;
+                return view('login');
+            }
+            
         }
     }
 

@@ -12,7 +12,7 @@ class CaregiverAPI
      */
     public function index()
     {
-        //
+        return view('caregiverHome');
     }
 
     /**
