@@ -85,13 +85,11 @@
 
     <div class="container">
 
-        <!-- Date Container -->
         <div class="date-container">
             <label for="date">Date: </label>
             <input type="date" id="date" value="{{ date('Y-m-d') }}" onchange="updateDate()">
         </div>
 
-        <!-- Roster Table (Supervisors, Doctors, Caregivers) -->
         <table class="roster-table">
             <thead>
                 <tr>
