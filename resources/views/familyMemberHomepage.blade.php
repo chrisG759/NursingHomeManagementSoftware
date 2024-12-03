@@ -104,7 +104,6 @@
             <input type="date" id="current-date" class="form-control" onchange="updateDate()" value="" />
         </div>
 
-        <!-- Family Information Section -->
         <div class="info-section">
             <label for="family-code">Family Code:</label>
             <input type="text" class="form-control" id="family-code" placeholder="Enter Family Code">
@@ -113,13 +112,11 @@
             <input type="text" class="form-control" id="family-id" placeholder="Enter Family ID">
         </div>
 
-        <!-- Action Buttons for Family Code and Family ID -->
         <div class="action-buttons mb-4">
             <button class="btn btn-success" onclick="fetchPatientDetails()">OK</button>
             <button class="btn btn-danger" onclick="cancelDetails()">Cancel</button>
         </div>
 
-        <!-- Patient Information Section (Initially hidden) -->
         <div class="patient-card" id="patient-info">
             <div class="card-header">
                 <h4>Patient Information</h4>
@@ -142,7 +139,6 @@
                     </tbody>
                 </table>
 
-                <!-- Medication and Meals -->
                 <h5>Medication and Meals</h5>
                 <table class="table table-bordered">
                     <thead>
@@ -171,14 +167,11 @@
     </div>
 
     <script>
-        // Function to update the date when user selects a new date
         function updateDate() {
             const selectedDate = document.getElementById('current-date').value;
             console.log(`Selected Date: ${selectedDate}`);
-            // You can handle the updated date as needed (e.g., displaying appointment details for the selected date)
         }
 
-        // Simulated data for patients (to mimic fetching from a database)
         const patients = {
             "1234": {
                 "family_id": "098765",
