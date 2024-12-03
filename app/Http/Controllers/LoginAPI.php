@@ -52,7 +52,7 @@ class LoginAPI
             ->first();
 
 
-        if ($employee && ($validated['password'] == $employee->password)){
+        if ($employee && ($validated['password'] == $employee->password) && ($employee->isValid == true)){
 
             if ($request->has('remember')) {
                 setcookie('userInfo', $validated['email'], time() + (86400), "/"); 
