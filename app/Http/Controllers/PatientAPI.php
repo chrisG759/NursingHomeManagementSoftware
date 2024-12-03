@@ -12,7 +12,7 @@ class PatientAPI
      */
     public function index()
     {
-        //
+        return view('PatientHomepage');
     }
 
     /**
