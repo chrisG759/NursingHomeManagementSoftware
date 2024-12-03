@@ -51,7 +51,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            display: none; /* Initially hide patient info */
+            display: none;
         }
 
         .info-section {
@@ -78,7 +78,6 @@
             padding: 15px;
         }
 
-        /* Custom Input Styles */
         input[type="text"], input[type="date"], input[type="password"] {
             padding: 10px;
             font-size: 16px;
@@ -99,13 +98,12 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- Date Section -->
+
         <div class="mb-4">
             <h3 id="current-date-label">Today's Date:</h3>
             <input type="date" id="current-date" class="form-control" onchange="updateDate()" value="" />
         </div>
 
-        <!-- Family Information Section -->
         <div class="info-section">
             <label for="family-code">Family Code:</label>
             <input type="text" class="form-control" id="family-code" placeholder="Enter Family Code">
@@ -114,13 +112,11 @@
             <input type="text" class="form-control" id="family-id" placeholder="Enter Family ID">
         </div>
 
-        <!-- Action Buttons for Family Code and Family ID -->
         <div class="action-buttons mb-4">
             <button class="btn btn-success" onclick="fetchPatientDetails()">OK</button>
             <button class="btn btn-danger" onclick="cancelDetails()">Cancel</button>
         </div>
 
-        <!-- Patient Information Section (Initially hidden) -->
         <div class="patient-card" id="patient-info">
             <div class="card-header">
                 <h4>Patient Information</h4>
@@ -143,7 +139,6 @@
                     </tbody>
                 </table>
 
-                <!-- Medication and Meals -->
                 <h5>Medication and Meals</h5>
                 <table class="table table-bordered">
                     <thead>
@@ -172,14 +167,13 @@
     </div>
 
     <script>
-        // Function to update the date when user selects a new date
+
         function updateDate() {
             const selectedDate = document.getElementById('current-date').value;
             console.log(`Selected Date: ${selectedDate}`);
-            // You can handle the updated date as needed (e.g., displaying appointment details for the selected date)
         }
 
-        // Simulated data for patients (to mimic fetching from a database)
+
         const patients = {
             "1234": {
                 "family_id": "098765",
@@ -207,16 +201,14 @@
             }
         };
 
-        // Function to fetch patient details based on entered Family Code and Family ID
         function fetchPatientDetails() {
             const familyCode = document.getElementById('family-code').value;
             const familyId = document.getElementById('family-id').value;
 
             if (patients[familyCode] && patients[familyCode].family_id === familyId) {
-                // Display patient's information
-                document.getElementById('patient-info').style.display = 'block'; // Show patient info
+                document.getElementById('patient-info').style.display = 'block'; 
 
-                // Fill in the patient's details
+ 
                 const patient = patients[familyCode];
                 document.getElementById('doctor-name').innerText = patient.doctor_name;
                 document.getElementById('appointment-time').innerText = patient.appointment_time;
@@ -232,7 +224,6 @@
             }
         }
 
-        // Function to clear details and allow re-entry
         function cancelDetails() {
             document.getElementById('family-code').value = '';
             document.getElementById('family-id').value = '';

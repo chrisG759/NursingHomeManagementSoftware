@@ -136,9 +136,9 @@
             var patientFields = document.getElementById("patientFields");
 
             if (role === "patient") {
-                patientFields.classList.remove("hidden"); // Show patient fields
+                patientFields.classList.remove("hidden"); 
             } else {
-                patientFields.classList.add("hidden"); // Hide patient fields
+                patientFields.classList.add("hidden"); 
             }
         }
 
