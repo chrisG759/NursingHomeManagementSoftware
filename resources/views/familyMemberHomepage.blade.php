@@ -51,7 +51,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            display: none; /* Initially hide patient info */
+            display: none; 
         }
 
         .info-section {
@@ -78,7 +78,6 @@
             padding: 15px;
         }
 
-        /* Custom Input Styles */
         input[type="text"], input[type="date"], input[type="password"] {
             padding: 10px;
             font-size: 16px;
@@ -204,10 +203,8 @@
             const familyId = document.getElementById('family-id').value;
 
             if (patients[familyCode] && patients[familyCode].family_id === familyId) {
-                // Display patient's information
-                document.getElementById('patient-info').style.display = 'block'; // Show patient info
+                document.getElementById('patient-info').style.display = 'block'; 
 
-                // Fill in the patient's details
                 const patient = patients[familyCode];
                 document.getElementById('doctor-name').innerText = patient.doctor_name;
                 document.getElementById('appointment-time').innerText = patient.appointment_time;
@@ -223,7 +220,6 @@
             }
         }
 
-        // Function to clear details and allow re-entry
         function cancelDetails() {
             document.getElementById('family-code').value = '';
             document.getElementById('family-id').value = '';
