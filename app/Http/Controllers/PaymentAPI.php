@@ -12,7 +12,7 @@ class PaymentAPI
      */
     public function index()
     {
-        //
+        return view('payments');
     }
 
     /**

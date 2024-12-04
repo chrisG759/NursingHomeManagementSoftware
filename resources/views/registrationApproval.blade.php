@@ -84,7 +84,6 @@
         @endif
         <form action="{{ route('admin.approveAll') }}" method="POST">
             @csrf
-            <h1>Registration Approval</h1>
             <table>
                 <tr>
                     <th>First Name</th>
