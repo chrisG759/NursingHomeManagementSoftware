@@ -29,11 +29,11 @@ class PaymentAPI
     public function show(string $id, Request $request)
     {
         $patient = $request->validate([
-            
+            'patientID' => 'patientID'
         ]);
         $patientPayment = DB::table('payments')
             ->select('total_due')
-            ->where('patientID', )
+            ->where('patientID', $patient)
     }
 
     /**
