@@ -26,9 +26,14 @@ class PaymentAPI
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
-        //
+        $patient = $request->validate([
+            
+        ]);
+        $patientPayment = DB::table('payments')
+            ->select('total_due')
+            ->where('patientID', )
     }
 
     /**
