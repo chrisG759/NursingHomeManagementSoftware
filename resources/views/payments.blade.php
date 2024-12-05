@@ -78,6 +78,11 @@
       color: #333;
     }
 
+    #remaining-balance {
+      font-weight: bold;
+      color: #333;
+    }
+
     .error-message, .success-message {
       text-align: center;
     }
@@ -168,6 +173,7 @@
       <!-- Total Calculation -->
       <div class="calculation-section">
         <h3>Total Cost: <span id="total-cost">${{ number_format($totalCost, 2) }}</span></h3>
+        <h3>Remaining Balance: <span id="remaining-balance">${{ number_format($patient->payment, 2) }}</span></h3>
       </div>
 
       <!-- Payment Input -->
