@@ -199,26 +199,36 @@
         };
 
         function fetchPatientDetails() {
-            const familyCode = document.getElementById('family-code').value;
-            const familyId = document.getElementById('family-id').value;
+    const familyCode = document.getElementById('family-code').value;
+    const familyId = document.getElementById('family-id').value;
 
-            if (patients[familyCode] && patients[familyCode].family_id === familyId) {
-                document.getElementById('patient-info').style.display = 'block'; 
+    if (familyCode && familyId) {
+        fetch(`/api/appointment/details?family_code=${familyCode}&family_id=${familyId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('patient-info').style.display = 'block';
 
-                const patient = patients[familyCode];
-                document.getElementById('doctor-name').innerText = patient.doctor_name;
-                document.getElementById('appointment-time').innerText = patient.appointment_time;
-                document.getElementById('caregiver-name').innerText = patient.caregiver_name;
-                document.getElementById('morning-medicine').innerText = patient.morning_medicine;
-                document.getElementById('afternoon-medicine').innerText = patient.afternoon_medicine;
-                document.getElementById('night-medicine').innerText = patient.night_medicine;
-                document.getElementById('breakfast').innerText = patient.breakfast;
-                document.getElementById('lunch').innerText = patient.lunch;
-                document.getElementById('dinner').innerText = patient.dinner;
-            } else {
-                alert("Invalid Family Code or Family ID.");
-            }
-        }
+                    const patient = data.patient;
+                    document.getElementById('doctor-name').innerText = patient.doctor_name;
+                    document.getElementById('appointment-time').innerText = patient.appointment_time;
+                    document.getElementById('caregiver-name').innerText = patient.caregiver_name;
+                    document.getElementById('morning-medicine').innerText = patient.morning_medicine;
+                    document.getElementById('afternoon-medicine').innerText = patient.afternoon_medicine;
+                    document.getElementById('night-medicine').innerText = patient.night_medicine;
+                    document.getElementById('breakfast').innerText = patient.breakfast;
+                    document.getElementById('lunch').innerText = patient.lunch;
+                    document.getElementById('dinner').innerText = patient.dinner;
+                } else {
+                    alert("Invalid Family Code or Family ID.");
+                }
+            })
+            .catch(error => console.error('Error fetching patient details:', error));
+    } else {
+        alert('Please enter both Family Code and Family ID.');
+    }
+}
+
 
         function cancelDetails() {
             document.getElementById('family-code').value = '';

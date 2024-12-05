@@ -15,3 +15,9 @@ use Illuminate\Support\Facades\Route;
     Route::resource('patient', PatientAPI::class);
 
     
+
+    use App\Http\Controllers\Api\PatientApiController;
+use App\Http\Controllers\Api\FamilyMemberApiController;
+
+Route::get('patient/{patientId}', [PatientApiController::class, 'getPatientDetails']);
+Route::get('appointment/details', [FamilyMemberApiController::class, 'getAppointmentDetails']);

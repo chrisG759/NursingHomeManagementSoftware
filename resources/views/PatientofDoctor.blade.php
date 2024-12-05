@@ -82,5 +82,35 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    document.getElementById('view-details').addEventListener('click', function() {
+        const patientId = document.getElementById('patient_id').value;
+        const appointmentDate = document.getElementById('appointment_date').value;
+    
+        if (!patientId) {
+            alert('Please enter a Patient ID');
+            return;
+        }
+    
+        fetch(`/api/appointment/details?patient_id=${patientId}&date=${appointmentDate}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('doctor_name').textContent = data.appointment.doctor_name;
+                    document.getElementById('appointment_time').textContent = data.appointment.appointment_time;
+                    document.getElementById('caregiver_name').textContent = data.appointment.caregiver_name;
+                    document.getElementById('morning_medicine').textContent = data.appointment.morning_medicine || 'N/A';
+                    document.getElementById('afternoon_medicine').textContent = data.appointment.afternoon_medicine || 'N/A';
+                    document.getElementById('night_medicine').textContent = data.appointment.night_medicine || 'N/A';
+                    document.getElementById('breakfast').textContent = data.appointment.breakfast;
+                    document.getElementById('lunch').textContent = data.appointment.lunch;
+                    document.getElementById('dinner').textContent = data.appointment.dinner;
+                } else {
+                    alert('Appointment not found for the given date.');
+                }
+            })
+            .catch(error => console.error('Error fetching appointment details:', error));
+    });
+    
 </body>
 </html>
