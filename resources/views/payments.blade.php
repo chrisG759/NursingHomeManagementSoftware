@@ -6,181 +6,185 @@
   <title>Healthcare Payment Form</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f9f9f9;
-}
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
 
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
+    h1 {
+      text-align: center;
+      color: #333;
+    }
 
-fieldset {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+    fieldset {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-legend {
-  font-size: 1.2em;
-  font-weight: bold;
-}
+    legend {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
 
-.form-section {
-  margin-bottom: 15px;
-}
+    .form-section {
+      margin-bottom: 15px;
+    }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #555;
-}
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
 
-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-button:hover {
-  background-color: #45a049;
-}
+    button:hover {
+      background-color: #45a049;
+    }
 
-.calculation-section {
-  text-align: center;
-}
+    .calculation-section {
+      text-align: center;
+    }
 
-#total-cost {
-  font-weight: bold;
-  color: #333;
-}
+    #total-cost {
+      font-weight: bold;
+      color: #333;
+    }
 
+    .error-message, .success-message {
+      text-align: center;
+    }
+
+    .error-message {
+      color: red;
+    }
+
+    .success-message {
+      color: green;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Healthcare Payment Form</h1>
-    <form id="paymentForm">
-      <!-- Patient Information Section -->
+    @if(session('error'))
+    <div class="error-message">{{ session('error') }}</div>
+    @endif
+
+    @if(session('success'))
+    <div class="success-message">{{ session('success') }}</div>
+    @endif
+    
+    <form method="GET" action="{{ route('payment.search') }}">
+      <!-- Patient Search Section -->
+      <fieldset>
+        <legend>Search for Patient Payment</legend>
+        
+        <!-- Patient ID Search -->
+        <div class="form-section">
+          <label for="patientId">Enter Patient ID to Search Payment</label>
+          <input type="text" id="patientId" name="patientId" placeholder="Enter Patient ID" required>
+        </div>
+
+        <button type="submit">Search Payment</button>
+      </fieldset>
+    </form>
+
+    <!-- Payment Details Form -->
+    @isset($patient)
+    <form id="paymentForm" method="POST" action="{{ route('payment.submit') }}">
+      @csrf
       <fieldset>
         <legend>Patient Information</legend>
         
         <!-- Patient ID -->
         <div class="form-section">
           <label for="patientId">Patient ID</label>
-          <input type="text" id="patientId" placeholder="Enter Patient ID" required>
+          <input type="text" id="patientId" name="patientId" value="{{ old('patientId', $patient->patientID) }}" readonly>
         </div>
         
         <!-- Patient Name -->
         <div class="form-section">
           <label for="patientName">Name</label>
-          <input type="text" id="patientName" placeholder="Enter Patient Name" required>
+          <input type="text" id="patientName" name="patientName" value="{{ old('patientName', $patient->first_name) }}" readonly>
         </div>
         
         <!-- Patient Email -->
         <div class="form-section">
           <label for="patientEmail">Email</label>
-          <input type="email" id="patientEmail" placeholder="Enter Patient Email" required>
+          <input type="email" id="patientEmail" name="patientEmail" value="{{ old('patientEmail', $patient->email) }}" readonly>
         </div>
       </fieldset>
 
-      <!-- Payment Details Section -->
       <fieldset>
         <legend>Payment Details</legend>
         
         <!-- Days Stayed Input -->
         <div class="form-section">
           <label for="daysStayed">Number of Days Stayed in the Nursing Home</label>
-          <input type="number" id="daysStayed" placeholder="Enter the number of days" required>
+          <input type="number" id="daysStayed" name="daysStayed" value="{{ old('daysStayed', $daysStayed) }}" readonly>
         </div>
 
         <!-- Appointments Input -->
         <div class="form-section">
           <label for="appointments">Number of Appointments</label>
-          <input type="number" id="appointments" placeholder="Enter the number of appointments" required>
+          <input type="number" id="appointments" name="appointments" value="{{ old('appointments', $appointmentCount) }}" readonly>
         </div>
 
         <!-- Medicine Cost Input -->
         <div class="form-section">
-            <label for="medicineAmount">Amount of Medicine Prescribed</label>
-            <input type="number" id="medicineAmount" placeholder="Enter the amount of medicine (units)" required>
-          </div>
+          <label for="medicineAmount">Amount of Medicine Prescribed</label>
+          <input type="number" id="medicineAmount" name="medicineAmount" value="{{ old('medicineAmount', $medicationCount) }}" readonly>
+        </div>
       </fieldset>
 
       <!-- Total Calculation -->
       <div class="calculation-section">
-        <button type="button" id="calculate-btn">Calculate Total</button>
-        <h3>Total Cost: <span id="total-cost">$0.00</span></h3>
+        <h3>Total Cost: <span id="total-cost">${{ number_format($totalCost, 2) }}</span></h3>
       </div>
+
+      <!-- Payment Input -->
+      <fieldset>
+        <legend>Make a Payment</legend>
+        
+        <!-- Payment Amount Input -->
+        <div class="form-section">
+          <label for="paymentAmount">Payment Amount</label>
+          <input type="number" id="paymentAmount" name="paymentAmount" placeholder="Enter payment amount" required>
+        </div>
+      </fieldset>
 
       <!-- Checkout Button -->
       <button type="submit" id="checkout-btn">Submit Payment</button>
     </form>
+    @endisset
   </div>
-
-  <script>
-    document.getElementById('calculate-btn').addEventListener('click', function () {
-      const daysStayed = parseInt(document.getElementById('daysStayed').value) || 0;
-      const appointments = parseInt(document.getElementById('appointments').value) || 0;
-      const medicineAmount = parseInt(document.getElementById('medicineAmount').value) || 0;
-
-      // Calculate total cost
-      const dailyRate = 10;
-      const appointmentCost = 50;
-      const medicineUnitCost = 5;
-
-      const totalCost = (daysStayed * dailyRate) + (appointments * appointmentCost) + (medicineAmount * medicineUnitCost);
-
-      // Display total cost
-      document.getElementById('total-cost').textContent = `$${totalCost.toFixed(2)}`;
-    });
-
-    document.getElementById('paymentForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent page refresh on submit
-
-      // Get form values
-      const patientId = document.getElementById('patientId').value;
-      const patientName = document.getElementById('patientName').value;
-      const patientEmail = document.getElementById('patientEmail').value;
-      const daysStayed = parseInt(document.getElementById('daysStayed').value) || 0;
-      const appointments = parseInt(document.getElementById('appointments').value) || 0;
-      const medicineAmount = parseInt(document.getElementById('medicineAmount').value) || 0;
-
-      const dailyRate = 10;
-      const appointmentCost = 50;
-      const medicineUnitCost = 5;
-
-      // Calculate total cost
-      const totalCost = (daysStayed * dailyRate) + (appointments * appointmentCost) + (medicineAmount * medicineUnitCost);
-
-      // Log data or handle form submission
-      alert(`Payment Submitted!\nPatient ID: ${patientId}\nName: ${patientName}\nEmail: ${patientEmail}\nDays Stayed: ${daysStayed}\nAppointments: ${appointments}\nAmount of Medicine: ${medicineAmount} units\nTotal Cost: $${totalCost.toFixed(2)}`);
-      
-      // Data can be sent to the backend if needed
-    });
-  </script>
 </body>
 </html>
