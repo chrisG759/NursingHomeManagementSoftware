@@ -77,46 +77,41 @@
 <body>
     <div class="container">
         <h1>Registration Approval</h1>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Yes</th>
-                <th>No</th>
-            </tr>
-            <tr>
-                <td id="user-name">John Doe</td>
-                <td id="user-role">Supervisor</td>
-                <td><input type="radio" name="approval" id="yes" value="yes"></td>
-                <td><input type="radio" name="approval" id="no" value="no"></td>
-            </tr>
-        </table>
-        <div class="actions">
-            <button class="ok-button" onclick="handleApproval()">OK</button>
-            <button class="cancel-button" onclick="handleCancel()">Cancel</button>
-        </div>
-        <p>Admin View Only.</p>
-    </div>
-
-    <script>
-        function handleApproval() {
-            const yesChecked = document.getElementById('yes').checked;
-            const noChecked = document.getElementById('no').checked;
-
-            if (yesChecked || noChecked) {
-                document.getElementById('user-name').textContent = '';
-                document.getElementById('user-role').textContent = '';
-                alert(yesChecked ? 'Approved!' : 'Rejected!');
-            } else {
-                alert('Please select Yes or No before proceeding.');
-            }
-        }
-
-        function handleCancel() {
-            document.getElementById('user-name').textContent = '';
-            document.getElementById('user-role').textContent = '';
-            alert('Action canceled.');
-        }
-    </script>
+        @if(session('success'))
+            <div class="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        <form action="{{ route('admin.approveAll') }}" method="POST">
+            @csrf
+            <table>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Approve</th>
+                    <th>Disapprove</th>
+                </tr>
+                
+                @foreach ($employees as $employee)
+                    <tr>
+                        <td>{{ $employee->first_name }}</td>
+                        <td>{{ $employee->last_name }}</td>
+                        <td>{{ $employee->role }}</td>
+                        <!-- Store the employee ID and approval status in hidden inputs -->
+                        <input type="hidden" name="employees[{{ $employee->employeeID }}][employeeID]" value="{{ $employee->employeeID }}">
+                        <td><input type="radio" name="employees[{{ $employee->employeeID }}][approval]" value="yes"></td>
+                        <td><input type="radio" name="employees[{{ $employee->employeeID }}][approval]" value="no"></td>
+                    </tr>
+                @endforeach
+            </table>
+        
+            <div class="actions">
+                <button type="submit" class="ok-button">Submit All</button>
+            </div>
+            <p>Admin View Only.</p>
+        </form>
+        
+    
 </body>
 </html>

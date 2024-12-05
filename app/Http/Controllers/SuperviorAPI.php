@@ -12,7 +12,7 @@ class SuperviorAPI
      */
     public function index()
     {
-        //
+        return view('DoctorAppointment');
     }
 
     /**

@@ -29,7 +29,9 @@ class SignupAPI
             'password' => $request->password,
             'role' => $request->role,
             'salary' => null,
-            'phoneNumber' => $request->phoneNumber
+            'phoneNumber' => $request->phoneNumber,
+            'isValid' => false,
+            'checked' => false
         ]);
 
         return redirect(route('login.index'));
