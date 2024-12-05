@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('signup', SignupAPI::class);
     Route::resource('admin', AdminAPI::class);
     Route::resource('doctor', DoctorAPI::class);
-    Route::resource('patient', PatientAPI::class);
+    Route::resource('patient', PatientApiController::class);
     Route::resource('caregiver', CaregiverAPI::class);
     Route::resource('supervisor', SuperviorAPI::class);
     Route::resource('payment', PaymentAPI::class);
