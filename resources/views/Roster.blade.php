@@ -27,6 +27,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        header a{
+            color: white;
+        }
+
         .date-container {
             text-align: center;
             margin-bottom: 20px;
@@ -87,6 +91,7 @@
 
     <header>
         <h1>Nursing Home Roster</h1>
+        <a href="{{ view('adminReport') }}">Admin Report</a>
     </header>
 
     <div class="container">
@@ -154,7 +159,7 @@
             const selectedDate = this.value;
             const url = new URL(window.location.href);
             url.searchParams.set('date', selectedDate);
-            window.location.href = url; // Redirect with the new date parameter
+            window.location.href = url; 
         });
     </script>
 

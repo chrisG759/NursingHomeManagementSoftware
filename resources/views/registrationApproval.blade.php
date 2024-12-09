@@ -95,7 +95,7 @@
             <a href="{{ route('roster.index') }}">
                 <li>Roster</li>
             </a>
-            <a href="">
+            <a href="{{ view('roleAccess') }}">
                 <li>Roles</li>
             </a>
         </ul>
