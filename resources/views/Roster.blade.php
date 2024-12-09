@@ -91,7 +91,6 @@
 
     <header>
         <h1>Nursing Home Roster</h1>
-        <a href="{{ view('adminReport') }}">Admin Report</a>
     </header>
 
     <div class="container">

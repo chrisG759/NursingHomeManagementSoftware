@@ -117,7 +117,7 @@
                     <th>Approve</th>
                     <th>Disapprove</th>
                 </tr>
-                
+                <?php Log::info('Memory usage before loop: '.memory_get_usage());?>
                 @foreach ($employees as $employee)
                     <tr>
                         <td>{{ $employee->first_name }}</td>
@@ -129,6 +129,7 @@
                         <td><input type="radio" name="employees[{{ $employee->employeeID }}][approval]" value="no"></td>
                     </tr>
                 @endforeach
+                <?php Log::info('Memory usage after loop: '.memory_get_usage());?>
             </table>
         
             <div class="actions">

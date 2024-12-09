@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAPI;
+use App\Http\Controllers\AdminReportAPI;
 use App\Http\Controllers\CaregiverAPI;
 use App\Http\Controllers\DoctorAPI;
 use App\Http\Controllers\LoginAPI;
@@ -25,4 +26,5 @@ use Illuminate\Support\Facades\Route;
     Route::get('patient/{patientId}', [PatientApiController::class, 'getPatientDetails']);
     Route::get('appointment/details', [FamilyMemberApiController::class, 'getAppointmentDetails']);
     Route::resource('payment', PaymentAPI::class);
+    Route::resource('adminReport', AdminReportAPI::class);
     
