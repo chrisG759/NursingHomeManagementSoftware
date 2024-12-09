@@ -147,11 +147,35 @@ table tbody tr:last-child td {
         padding: 0.5rem;
     }
 }
+#header-links{
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 2cm;
+}
+#header-links, a{
+    margin-left: .5cm;
+    margin-right: .5cm;
+    color: white;
+    text-decoration: none;
+}
    </style>
 </head>
 <body>
     <header>
         <h1>Admin's Report</h1>
+        <ul id="header-links">
+            <a href="{{ view('registrationApproval') }}">
+                <li>Registration Approval</li>
+            </a>
+            <a href="{{ route('admin.index') }}">
+                <li>Roster</li>
+            </a>
+            <a href="{{ view('roleAccess') }}">
+                <li>Roles</li>
+            </a>
+        </ul>
     </header>
     <main>
         <section id="filter-section">

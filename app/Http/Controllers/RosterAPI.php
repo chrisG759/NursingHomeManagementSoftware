@@ -11,34 +11,49 @@ class RosterAPI
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Get the doctor details based on doctorID (e.g., 2)
-        $doctor = DB::table('doctors')
-            ->where('doctorID', 2)
-            ->first();
-
-        // Get the caregivers for the same groupID as the doctor
-        $caregivers = DB::table('caregivers')
-            ->where('groupID', $doctor->groupID)
-            ->get();
-
-        // Get the supervisor details for the same groupID
+        // Get the current date or the selected date from the request
+        $currentDate = $request->query('date', date('Y-m-d'));
+    
+        // Fetch the supervisor based on the group_date
         $supervisor = DB::table('supervisors')
-            ->where('groupID', $doctor->groupID)
+            ->where('group_date', $currentDate)
             ->first();
-
-        // Get the patient group ID
-        $patientGroup = $doctor->groupID;
-
-        // Return the data to the view
+    
+        if (!$supervisor) {
+            return view('Roster', [
+                'doctor' => null,
+                'caregivers' => [],
+                'supervisor' => null,
+                'patientGroup' => null,
+                'currentDate' => $currentDate,
+            ])->with('error', 'No supervisor available for the selected date.');
+        }
+    
+        // Use the supervisor's groupID to fetch the doctor
+        $doctor = DB::table('doctors')
+            ->where('groupID', $supervisor->groupID)
+            ->first();
+    
+        // Use the supervisor's groupID to fetch the caregivers
+        $caregivers = DB::table('caregivers')
+            ->where('groupID', $supervisor->groupID)
+            ->get();
+    
+        // Use the supervisor's groupID as the patient group
+        $patientGroup = $supervisor->groupID;
+    
+        // Return the view with the data
         return view('Roster', [
             'doctor' => $doctor,
             'caregivers' => $caregivers,
             'supervisor' => $supervisor,
-            'patientGroup' => $patientGroup
+            'patientGroup' => $patientGroup,
+            'currentDate' => $currentDate,
         ]);
     }
+    
 
     /**
      * Store a newly created resource in storage.

@@ -22,17 +22,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('supervisor', SuperviorAPI::class);
     Route::resource('payment', PaymentAPI::class);
     Route::resource('roster', RosterAPI::class);
-    
-Route::resource('login', LoginAPI::class);
-Route::resource('signup', SignupAPI::class);
-Route::resource('admin', AdminAPI::class);
-Route::resource('doctor', DoctorAPI::class);
-Route::resource('patient', PatientApiController::class);
-
-    
-Route::get('patient/{patientId}', [PatientApiController::class, 'getPatientDetails']);
-Route::get('appointment/details', [FamilyMemberApiController::class, 'getAppointmentDetails']);
-Route::resource('caregiver', CaregiverAPI::class);
-Route::resource('supervisor', SuperviorAPI::class);
-Route::resource('payment', PaymentAPI::class);
+    Route::get('patient/{patientId}', [PatientApiController::class, 'getPatientDetails']);
+    Route::get('appointment/details', [FamilyMemberApiController::class, 'getAppointmentDetails']);
+    Route::resource('payment', PaymentAPI::class);
     

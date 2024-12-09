@@ -75,6 +75,12 @@
         .role-name {
             font-size: 16px;
         }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -84,11 +90,14 @@
     </header>
 
     <div class="container">
-
         <div class="date-container">
             <label for="date">Date: </label>
-            <input type="date" id="date" value="{{ date('Y-m-d') }}" onchange="updateDate()">
+            <input type="date" id="date" value="{{ $currentDate }}">
         </div>
+
+        @if(session('error'))
+            <div class="error">{{ session('error') }}</div>
+        @endif
 
         <table class="roster-table">
             <thead>
@@ -111,14 +120,12 @@
                         <div class="role-header">Name</div>
                         <span class="role-name">{{ $doctor->first_name ?? 'N/A' }}</span>
                     </td>
-                    @foreach($caregivers as $index => $caregiver)
-                        @if($index < 5) <!-- Adjust to handle more caregivers dynamically -->
+                    @for($i = 0; $i < 4; $i++)
                         <td>
                             <div class="role-header">Name</div>
-                            <span class="role-name">{{ $caregiver->name }}</span>
+                            <span class="role-name">{{ $caregivers[$i]->name ?? 'N/A' }}</span>
                         </td>
-                        @endif
-                    @endforeach
+                    @endfor
                 </tr>
             </tbody>
         </table>
@@ -140,14 +147,15 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
 
     <script>
-        function updateDate() {
-            const selectedDate = document.getElementById("date").value;
-            console.log("Selected Date: ", selectedDate);
-        }
+        document.getElementById("date").addEventListener("change", function () {
+            const selectedDate = this.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('date', selectedDate);
+            window.location.href = url; // Redirect with the new date parameter
+        });
     </script>
 
 </body>
