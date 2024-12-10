@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Medication;
 use Illuminate\Http\Request;
 
-class MedicationController
+class MedicationController extends Controller
 {
-    // Store a new medication
     public function store(Request $request)
     {
         $request->validate([
@@ -22,62 +20,39 @@ class MedicationController
         $medication->description = $request->description;
         $medication->save();
 
-        return response()->json([
-            'message' => 'Medication added successfully',
-            'data' => $medication
-        ], 201);
+        return redirect()->route('medications.index')->with('success', 'Medication added successfully.');
     }
 
-    // Get all medications
     public function index()
     {
         $medications = Medication::all();
-        return response()->json($medications);
+        return view('medications.index', compact('medications'));
     }
 
-    // Show specific medication
-    public function show($id)
+    public function edit($id)
     {
-        $medication = Medication::find($id);
-
-        if (!$medication) {
-            return response()->json(['message' => 'Medication not found'], 404);
-        }
-
-        return response()->json($medication);
+        $medication = Medication::findOrFail($id);
+        return view('medications.edit', compact('medication'));
     }
 
-    // Update a medication
     public function update(Request $request, $id)
     {
-        $medication = Medication::find($id);
-
-        if (!$medication) {
-            return response()->json(['message' => 'Medication not found'], 404);
-        }
-
-        $medication->name = $request->name ?? $medication->name;
-        $medication->type = $request->type ?? $medication->type;
-        $medication->description = $request->description ?? $medication->description;
-        $medication->save();
-
-        return response()->json([
-            'message' => 'Medication updated successfully',
-            'data' => $medication
+        $medication = Medication::findOrFail($id);
+        
+        $medication->update([
+            'name' => $request->name,
+            'type' => $request->type,
+            'description' => $request->description,
         ]);
+
+        return redirect()->route('medications.index')->with('success', 'Medication updated successfully.');
     }
 
-    // Delete a medication
     public function destroy($id)
     {
-        $medication = Medication::find($id);
-
-        if (!$medication) {
-            return response()->json(['message' => 'Medication not found'], 404);
-        }
-
+        $medication = Medication::findOrFail($id);
         $medication->delete();
 
-        return response()->json(['message' => 'Medication deleted successfully']);
+        return redirect()->route('medications.index')->with('success', 'Medication deleted successfully.');
     }
 }

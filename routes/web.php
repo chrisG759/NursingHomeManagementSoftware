@@ -17,3 +17,6 @@ Route::get('/PatientHomepage', function(){
 
 Route::get('/admin/approval', [AdminAPI::class, 'index'])->name('admin.index');
 Route::post('/admin/approveAll', [AdminAPI::class, 'approveAll'])->name('admin.approveAll');
+
+use App\Http\Controllers\MedicationController;
+Route::resource('medications', MedicationController::class);
