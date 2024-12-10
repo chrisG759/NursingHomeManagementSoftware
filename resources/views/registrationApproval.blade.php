@@ -72,9 +72,34 @@
             color: #555;
             margin-top: 10px;
         }
+        header{
+            margin-right: 2cm;
+        }
+        #header-links, a{
+            text-decoration: none;
+            margin-bottom: 1cm;
+            color: green;
+        }
+        #header-links{
+            list-style-type: none;
+        }
+        #header-links, a,li{
+            margin-bottom: 1cm;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <ul id="header-links">
+            <h2 style="color: black; margin-bottom: 1cm;">Links</h2>
+            <a href="{{ route('roster.index') }}">
+                <li>Roster</li>
+            </a>
+            <a href="{{ view('roleAccess') }}">
+                <li>Roles</li>
+            </a>
+        </ul>
+    </header>
     <div class="container">
         <h1>Registration Approval</h1>
         @if(session('success'))
@@ -92,7 +117,7 @@
                     <th>Approve</th>
                     <th>Disapprove</th>
                 </tr>
-                
+                <?php Log::info('Memory usage before loop: '.memory_get_usage());?>
                 @foreach ($employees as $employee)
                     <tr>
                         <td>{{ $employee->first_name }}</td>
@@ -104,6 +129,7 @@
                         <td><input type="radio" name="employees[{{ $employee->employeeID }}][approval]" value="no"></td>
                     </tr>
                 @endforeach
+                <?php Log::info('Memory usage after loop: '.memory_get_usage());?>
             </table>
         
             <div class="actions">

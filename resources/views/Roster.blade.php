@@ -27,6 +27,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        header a{
+            color: white;
+        }
+
         .date-container {
             text-align: center;
             margin-bottom: 20px;
@@ -75,6 +79,12 @@
         .role-name {
             font-size: 16px;
         }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -84,11 +94,14 @@
     </header>
 
     <div class="container">
-
         <div class="date-container">
             <label for="date">Date: </label>
-            <input type="date" id="date" value="{{ date('Y-m-d') }}" onchange="updateDate()">
+            <input type="date" id="date" value="{{ $currentDate }}">
         </div>
+
+        @if(session('error'))
+            <div class="error">{{ session('error') }}</div>
+        @endif
 
         <table class="roster-table">
             <thead>
@@ -105,28 +118,18 @@
                 <tr>
                     <td>
                         <div class="role-header">Name</div>
-                        <span class="role-name">John Doe</span>
+                        <span class="role-name">{{ $supervisor->name ?? 'N/A' }}</span>
                     </td>
                     <td>
                         <div class="role-header">Name</div>
-                        <span class="role-name">Dr. Smith</span>
+                        <span class="role-name">{{ $doctor->first_name ?? 'N/A' }}</span>
                     </td>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">Alice Brown</span>
-                    </td>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">Bob Green</span>
-                    </td>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">Charlie White</span>
-                    </td>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">Diana Black</span>
-                    </td>
+                    @for($i = 0; $i < 4; $i++)
+                        <td>
+                            <div class="role-header">Name</div>
+                            <span class="role-name">{{ $caregivers[$i]->name ?? 'N/A' }}</span>
+                        </td>
+                    @endfor
                 </tr>
             </tbody>
         </table>
@@ -140,33 +143,23 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($caregivers as $caregiver)
                 <tr>
-                    <td>Caregiver 1 (Alice Brown)</td>
-                    <td>Group A</td>
+                    <td>{{ $caregiver->name }}</td>
+                    <td>{{ $patientGroup }}</td>
                 </tr>
-                <tr>
-                    <td>Caregiver 2 (Bob Green)</td>
-                    <td>Group B</td>
-                </tr>
-                <tr>
-                    <td>Caregiver 3 (Charlie White)</td>
-                    <td>Group C</td>
-                </tr>
-                <tr>
-                    <td>Caregiver 4 (Diana Black)</td>
-                    <td>Group D</td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
-
     </div>
 
     <script>
-
-        function updateDate() {
-            const selectedDate = document.getElementById("date").value;
-            console.log("Selected Date: ", selectedDate);
-        }
+        document.getElementById("date").addEventListener("change", function () {
+            const selectedDate = this.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('date', selectedDate);
+            window.location.href = url; 
+        });
     </script>
 
 </body>

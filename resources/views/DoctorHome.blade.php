@@ -28,57 +28,32 @@
     <div class="container mt-5">
         <h3>Today's Patients</h3>
 
-         <form id="search-form" class="mb-4">
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="search-name" placeholder="Search Name">
-                </div>
-                <div class="col-md-2">
-                    <input type="date" class="form-control" id="search-date">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="search-comment" placeholder="Search Comment">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="search-morning" placeholder="Morning Meds">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="search-afternoon" placeholder="Afternoon Meds">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" id="search-night" placeholder="Night Meds">
-                </div>
-            </div>
-        </form>
-
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Date</th>
                     <th>Comment</th>
-                    <th>Morning Meds</th>
-                    <th>Afternoon Meds</th>
-                    <th>Night Meds</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            {{-- <tbody id="patient-list">
-                 <tr>
-                    <td>{{ name }}</td>
-                    <td>{{ appointment_date }}</td>
-                    <td>{{ comment }}</td>
-                    <td>{{ morning_meds }}</td>
-                    <td>{{ afternoon_meds }}</td>
-                    <td>{{ night_meds }}</td>
- 
-                </tr>
-                
-            </tbody> --}}
+            <tbody id="patient-list">
+                @foreach ($appointments as $appointment)
+                    <tr>
+                        <td>{{ $appointment->first_name }} {{ $appointment->last_name }}</td>
+                        <td>{{ $appointment->date }}</td>
+                        <td>{{ $appointment->comment }}</td>
+                        <td>
+                            <!-- Action buttons, like view or delete -->
+                            <button class="btn btn-primary">View</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
 
-
-        <h3>Upcoming Appointments</h3>
+        <!-- Old Appointments Section (optional, if needed) -->
         <h3>Search Old Appointments</h3>
         <form id="old-appointments-search" class="mb-4">
             <div class="row">
@@ -94,29 +69,17 @@
             </div>
         </form>
 
-        <div id="old-appointments-list">
-
-        </div>
+        <div id="old-appointments-list"></div>
     </div>
 
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.getElementById('search-form').addEventListener('input', function() {
-            const name = document.getElementById('search-name').value.toLowerCase();
-            const rows = document.querySelectorAll('#patient-list tr');
-           
-            rows.forEach(row => {
-                const patientName = row.cells[0].textContent.toLowerCase();
-                row.style.display = patientName.includes(name) ? '' : 'none';
-            });
-        });
-
         document.getElementById('search-old').addEventListener('click', function() {
             const date = document.getElementById('old-search-date').value;
             const patient = document.getElementById('old-search-patient').value;
 
-             fetch(`/api/doctor/old-appointments?date=${date}&patient=${patient}`)
+            fetch(`/api/doctor/old-appointments?date=${date}&patient=${patient}`)
                 .then(response => response.json())
                 .then(data => {
                     const list = document.getElementById('old-appointments-list');
