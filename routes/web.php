@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAPI;
+use App\Http\Controllers\EmployeesAPI;
 use App\Http\Controllers\PaymentAPI;
 
 Route::get('/', function(){

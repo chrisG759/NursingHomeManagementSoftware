@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FamilyAPI
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $familyCode = $request->familyCode;
+        $patientID = $request->patientID;
+
+        $patient = DB::table('patients')
+            ->where('familyID', '=', $familyCode)
+            ->where('patientID', '=', $patientID)
+            ->first();
+
+        return view('familyHome', ['patient' => $patient]);
     }
 
     /**

@@ -123,6 +123,9 @@
 
                     <label for="relation_to_emergency">Relation to Emergency Contact:</label>
                     <input type="text" id="relation_to_emergency" name="relation_to_emergency"><br>
+                    
+                    <label for="date_of_birth">Date of Birth:</label>
+                    <input type="text" id="date_of_birth" name="date_of_birth"><br>
                 </div>
 
                 <input type="submit" value="Register">
