@@ -15,7 +15,7 @@ use App\Http\Controllers\RosterAPI;
 use App\Http\Controllers\SignupAPI;
 use App\Http\Controllers\SuperviorAPI;
 use Illuminate\Support\Facades\Route;
-    
+use App\Http\Controllers\Api\NewRosterController;
 
     Route::resource('login', LoginAPI::class);
     Route::resource('signup', SignupAPI::class);
@@ -32,4 +32,5 @@ use Illuminate\Support\Facades\Route;
     Route::resource('employees', EmployeesAPI::class);
     Route::resource('patients', PatientAPI::class);
     Route::resource('family', FamilyAPI::class);
-    
+    Route::get('/roster-options', [NewRosterController::class, 'options']);
+    Route::post('/rosters', [NewRosterController::class, 'store']);
