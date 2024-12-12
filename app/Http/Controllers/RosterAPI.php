@@ -53,6 +53,6 @@ class RosterAPI
      */
     public function destroy(string $id)
     {
-        // Implement destroy if needed
+        
     }
 }
