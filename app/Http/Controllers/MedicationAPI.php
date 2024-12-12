@@ -1,49 +1,57 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Medication;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class MedicationAPI
+class MedicationController 
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $medication = $request->validate([
+            'medName' =>  $request->name,
+            'description' => $request->description
+        ]);
+
+        return redirect()->route('medications.index')->with('success', 'Medication added successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function index()
     {
-        //
+        return view('medications.index', compact('medications'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show()
     {
-        //
+    
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $medication=DB::table('medication')
+        
+        $medication->update([
+            'name' => $request->name,
+            'type' => $request->type,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('medications.index')->with('success', 'Medication updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $medication = Medication::findOrFail($id);
+        $medication->delete();
+
+        return redirect()->route('medications.index')->with('success', 'Medication deleted successfully.');
     }
 }

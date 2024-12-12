@@ -6,7 +6,7 @@
     <title>Manage Medications</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body>  
     <div class="container mt-5">
         <h1 class="mb-4">Manage Medications</h1>
 
@@ -28,10 +28,6 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Medication Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Medication Type</label>
-                        <input type="text" class="form-control" id="type" name="type">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
