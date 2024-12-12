@@ -94,6 +94,7 @@
                     <option value="patient">Patient</option>
                     <option value="doctor">Doctor</option>
                     <option value="Caregiver">Caregiver</option>
+                    <option value="family">Family</option>
                 </select><br>
 
                 <label for="first_name">First Name:</label>

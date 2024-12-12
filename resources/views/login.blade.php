@@ -84,7 +84,7 @@ input[type="sumbit"]:hover {
             <input type="text" name="email" placeholder="Enter your email">
             <label for="password">Password:</label>
             <input type="password" name="password" placeholder="Enter your password">
-            @if ($_POST['loginInvalid'] == true)
+            @if ($loginInvalid == true)
                 <p id="invalidLogin">Invalid Login</p>   
             @endif
             <div class="check">

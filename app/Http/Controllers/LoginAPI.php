@@ -1,39 +1,34 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Post;
 
-use function Pest\Laravel\post;
-
-class LoginAPI
+class LoginAPI 
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if(isset($_COOKIE['userInfo'])){
+        if (isset($_COOKIE['userInfo'])) {
             $employee = DB::table('employees')
-            ->where('email', $_COOKIE['userInfo'])
-            ->first();
+                ->where('email', $_COOKIE['userInfo'])
+                ->first();
 
-            if($employee){
-                if($employee->role == 'Admin'){
+            if ($employee) {
+                if ($employee->role == 'Admin') {
                     return redirect(route('admin.index'));
-                } else if($employee->role == 'Doctor'){
+                } elseif ($employee->role == 'Doctor') {
                     return redirect(route('doctor.index'));
-                } else if($employee->role == 'Patient'){
+                } elseif ($employee->role == 'Patient') {
                     return redirect(route('patient.index'));
                 }
             }
         }
 
-        $_POST['loginInvalid'] = false;
-        return view('login');
+        return view('login', ['loginInvalid' => false]);
     }
 
     /**
@@ -41,43 +36,41 @@ class LoginAPI
      */
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string'
+            'password' => 'required|string',
         ]);
 
-        $employee = DB::table('employees')
-            ->where('email', $validated['email'])
+        $family = DB::table('families')
+            ->where('username', '=', $request->email)
             ->first();
 
+        $employee = DB::table('employees')
+            ->where('email', '=', $request->email)
+            ->first();
 
-        if ($employee && ($validated['password'] == $employee->password) && $employee->isValid == true){
+        if ($employee && ($validated['password'] == $employee->password) && $employee->isValid == true) {
 
             if ($request->has('remember')) {
-                setcookie('userInfo', $validated['email'], time() + (86400), "/"); 
+                setcookie('userInfo', $validated['email'], time() + 86400, "/");
             }
 
-
-            
-            if($employee->role == 'Doctor'){
+            if ($employee->role == 'Doctor') {
                 return redirect(route('doctor.index'));
-            } else if($employee->role == 'Patient'){
+            } elseif ($employee->role == 'Patient') {
                 return redirect(route('patient.index'));
-            } else if($employee->role == 'Caregiver'){
+            } elseif ($employee->role == 'Caregiver') {
                 return redirect(route('caregiver.index'));
-            } else if($employee->role == 'Supervisor'){
+            } elseif ($employee->role == 'Supervisor') {
                 return redirect(route('supervisor.index'));
-            }
-        } else {
-            if($employee->role == 'Admin'){
+            } elseif ($employee->role == 'Admin') {
                 return redirect(route('admin.index'));
-            } else{
-                $_POST['loginInvalid'] = true;
-                return view('login');
             }
-            
+        } elseif ($family && ($request->password == $family->password)) {
+            return redirect(route('family.index'));
         }
+
+        return view('login', ['loginInvalid' => true]);
     }
 
     /**
@@ -85,7 +78,7 @@ class LoginAPI
      */
     public function show(string $id)
     {
-        //
+        // Implement show method if needed
     }
 
     /**
@@ -93,7 +86,7 @@ class LoginAPI
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Implement update method if needed
     }
 
     /**
@@ -101,6 +94,6 @@ class LoginAPI
      */
     public function destroy(string $id)
     {
-        //
+        // Implement destroy method if needed
     }
 }
