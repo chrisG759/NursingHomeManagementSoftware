@@ -41,6 +41,12 @@ class SignupAPI
                 'payment' => null
             ]);  
             redirect(route('login.index')); 
+        }else if ($request->role == 'family'){
+            DB::table('families')->insert([
+                'username' => $request->email,
+                'password' => $request->password
+            ]);
+            return redirect(route('login.index'));
         } else {
             DB::table('employees')->insert([
                 'first_name' => $request->first_name,
@@ -53,6 +59,8 @@ class SignupAPI
                 'isValid' => false,
                 'checked' => false
             ]);
+
+            
     
             return redirect(route('login.index'));
         }
