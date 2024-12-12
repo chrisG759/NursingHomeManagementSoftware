@@ -40,7 +40,7 @@ class PatientAPI
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified res,ource in storage.
      */
     public function update(Request $request, string $id)
     {

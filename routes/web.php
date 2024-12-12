@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAPI;
 use App\Http\Controllers\EmployeesAPI;
 use App\Http\Controllers\PaymentAPI;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\RosterController;
 
 Route::get('/', function(){
     return view('homepage');
@@ -28,3 +31,9 @@ Route::get('/search-payment', [PaymentAPI::class, 'search'])->name('payment.sear
 
 // Route for submitting payment (if needed)
 Route::post('/submit-payment', [PaymentAPI::class, 'store'])->name('payment.submit');
+
+Route::get('/create-roster', [RosterController::class, 'create'])->name('create-roster');
+Route::put('/push-roster', [RosterController::class, 'store'])->name('push-roster');
+
+
+
