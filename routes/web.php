@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAPI;
+use App\Http\Controllers\EmployeesAPI;
 use App\Http\Controllers\PaymentAPI;
 
 Route::get('/', function(){
@@ -27,5 +28,3 @@ Route::get('/search-payment', [PaymentAPI::class, 'search'])->name('payment.sear
 
 // Route for submitting payment (if needed)
 Route::post('/submit-payment', [PaymentAPI::class, 'store'])->name('payment.submit');
-
-

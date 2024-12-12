@@ -12,13 +12,19 @@ class EmployeesAPI
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $searchEmployee = DB::table('employees')
+            ->where('first_name', '=', $request->searchedEmployee)
+            ->where('isValid', '=', '1')
+            ->first();
+
         $employees = DB::table('employees')
             ->select('employeeID', 'first_name', 'last_name', 'email', 'password', 'role', 'salary')
+            ->where('isValid', '=', '1')
             ->get();
 
-        return view('employees', ['employees' => $employees]);
+        return view('employees', ['employees' => $employees, 'searchEmployee' => $searchEmployee]);
     }
 
     /**
@@ -27,6 +33,10 @@ class EmployeesAPI
     public function store(Request $request)
     {
         //
+    }
+
+    public function searchEmployee(Request $request){
+        
     }
 
     /**
