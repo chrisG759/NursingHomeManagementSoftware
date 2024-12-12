@@ -74,8 +74,19 @@
         <div class="info-section">
             <form action="">
                 @csrf
+                <table>
+                    <tr>
+                        <td>Enter Family Code: </td>
+                        <td><input type="text" name="familyCode"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Patient ID: </td>
+                        <td><input type="text" name="patientID"></td>
+                    </tr>
+                </table>
                 <label for="family Code">Enter Family Code: </label>
-                <input type="text" name="familyCode">
+                
+                <label for="patient id">Patient ID: </label>
                 <input type="submit" value="OK">
             </form>
         </div>

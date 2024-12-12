@@ -14,9 +14,11 @@ class FamilyAPI
     public function index(Request $request)
     {
         $familyCode = $request->familyCode;
+        $patientID = $request->patientID;
 
         $patient = DB::table('patients')
             ->where('familyID', '=', $familyCode)
+            ->where('patientID', '=', $patientID)
             ->first();
 
         return view('familyHome', ['patient' => $patient]);

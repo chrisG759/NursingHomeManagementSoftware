@@ -89,17 +89,6 @@
     </style>
 </head>
 <body>
-    <header>
-        <ul id="header-links">
-            <h2 style="color: black; margin-bottom: 1cm;">Links</h2>
-            <a href="{{ route('roster.index') }}">
-                <li>Roster</li>
-            </a>
-            <a href="{{ view('roleAccess') }}">
-                <li>Roles</li>
-            </a>
-        </ul>
-    </header>
     <div class="container">
         <h1>Registration Approval</h1>
         @if(session('success'))
