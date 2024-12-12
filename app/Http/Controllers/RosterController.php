@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
-class RosterController
+class RosterController 
 {
     // Render the form for creating a roster
     public function create()
@@ -35,71 +35,48 @@ class RosterController
     // Store the roster details
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'date' => 'required|date',
-        //     'doctor' => 'required|exists:employees,employeeID',
-        //     'supervisor' => 'required|exists:employees,employeeID',
-        //     'caregiver1' => 'required|exists:employees,employeeID',
-        //     'caregiver2' => 'nullable|exists:employees,employeeID',
-        //     'caregiver3' => 'nullable|exists:employees,employeeID',
-        //     'caregiver4' => 'nullable|exists:employees,employeeID',
-        // ]);
+        $doctor = DB::table('employees')
+            ->where('employeeID', '=', $request->input('doctor'))
+            ->first();
+        
+        $supervisor = DB::table('employees')
+            ->where('employeeID', '=', $request->input('supervisor'))
+            ->first();
 
-        // // Fetch employee names based on their IDs
-        // $doctor = DB::table('employees')
-        //     ->where('employeeID', $validated['doctor'])
-        //     ->where('isValid', '=', '1')
-        //     ->value(DB::raw("CONCAT(first_name, ' ', last_name)"));
-        
-        // $supervisor = DB::table('employees')
-        //     ->where('employeeID', $validated['supervisor'])
-        //     ->where('isValid', '=', '1')
-        //     ->value(DB::raw("CONCAT(first_name, ' ', last_name)"));
-        
-        // $caregiver1 = DB::table('employees')
-        //     ->where('employeeID', $validated['caregiver1'])
-        //     ->where('isValid', '=', '1')
-        //     ->value(DB::raw("CONCAT(first_name, ' ', last_name)"));
-        
-        // $caregiver2 = $validated['caregiver2']
-        //     ? DB::table('employees')
-        //         ->where('employeeID', $validated['caregiver2'])
-        //         ->where('isValid', '=', '1')
-        //         ->value(DB::raw("CONCAT(first_name, ' ', last_name)"))
-        //     : null;
-        
-        // $caregiver3 = $validated['caregiver3']
-        //     ? DB::table('employees')
-        //         ->where('employeeID', $validated['caregiver3'])
-        //         ->where('isValid', '=', '1')
-        //         ->value(DB::raw("CONCAT(first_name, ' ', last_name)"))
-        //     : null;
-        
-        // $caregiver4 = $validated['caregiver4']
-        //     ? DB::table('employees')
-        //         ->where('employeeID', $validated['caregiver4'])
-        //         ->where('isValid', '=', '1')
-        //         ->value(DB::raw("CONCAT(first_name, ' ', last_name)"))
-        //     : null;
+        $caregiver1 = DB::table('employees')
+        ->where('employeeID', '=', $request->input('caregiver_1'))
+        ->first();
 
-        // // Fetch the supervisor's groupID from the supervisors table
-        // $groupID = DB::table('supervisors')
-        //     ->where('supervisorID', $validated['supervisor'])
-        //     ->value('groupID');
+        $caregiver2 = DB::table('employees')
+        ->where('employeeID', '=', $request->input('caregiver_2'))
+        ->first();
 
-        // // Insert the names into the rosters table
-        // DB::table('rosters')->insert([
-        //     'date' => $validated['date'],
-        //     'doctor' => $doctor,
-        //     'supervisor' => $supervisor,
-        //     'caregiver1' => $caregiver1,
-        //     'caregiver2' => $caregiver2,
-        //     'caregiver3' => $caregiver3,
-        //     'caregiver4' => $caregiver4,
-        //     'groupID' => $groupID,  // Use the groupID from the supervisors table
-        // ]);
+        $caregiver3 = DB::table('employees')
+        ->where('employeeID', '=', $request->input('caregiver_3'))
+        ->first();
 
-        // return redirect()->route('create-roster')->with('success', 'Roster created successfully!');
-        return dd($request->all());
+        $caregiver4 = DB::table('employees')
+        ->where('employeeID', '=', $request->input('caregiver_4'))
+        ->first();
+
+        $groupID = DB::table('supervisors')
+            ->where('employeeID', '=', $supervisor->employeeID)
+            ->first();
+
+        // Directly insert data into the database without validation
+        DB::table('rosters')->insert([
+            'date' => $request->input('date'),
+            'supervisor' => $supervisor->first_name." ".$supervisor->last_name,
+            'doctor' => $doctor->first_name." ".$doctor->last_name,
+            'caregiver1' => $caregiver1->first_name." ".$caregiver1->last_name,
+            'caregiver2' => $caregiver2->first_name." ".$caregiver2->last_name,
+            'caregiver3' => $caregiver3->first_name." ".$caregiver3->last_name,
+            'caregiver4' => $caregiver4->first_name." ".$caregiver4->last_name,
+            'groupID' => $groupID->groupID
+        ]);
+
+
+        // Redirect after successful insertion
+        return redirect()->route('create-roster')->with('success', 'Roster created successfully.');
     }
 }
