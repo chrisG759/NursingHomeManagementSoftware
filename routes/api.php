@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorAPI;
 use App\Http\Controllers\LoginAPI;
 use App\Http\Controllers\Api\PatientApiController;
 use App\Http\Controllers\Api\FamilyMemberApiController;
+use App\Http\Controllers\EmployeesAPI;
 use App\Http\Controllers\PaymentAPI;
 use App\Http\Controllers\RosterAPI;
 use App\Http\Controllers\SignupAPI;
@@ -27,4 +28,5 @@ use Illuminate\Support\Facades\Route;
     Route::get('appointment/details', [FamilyMemberApiController::class, 'getAppointmentDetails']);
     Route::resource('payment', PaymentAPI::class);
     Route::resource('adminReport', AdminReportAPI::class);
+    Route::resource('employees', EmployeesAPI::class);
     

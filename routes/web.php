@@ -27,3 +27,5 @@ Route::get('/search-payment', [PaymentAPI::class, 'search'])->name('payment.sear
 
 // Route for submitting payment (if needed)
 Route::post('/submit-payment', [PaymentAPI::class, 'store'])->name('payment.submit');
+
+
