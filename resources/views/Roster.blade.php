@@ -112,42 +112,20 @@
                     <th>Caregiver 2</th>
                     <th>Caregiver 3</th>
                     <th>Caregiver 4</th>
+                    <th>Group ID</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">{{ $supervisor->name ?? 'N/A' }}</span>
-                    </td>
-                    <td>
-                        <div class="role-header">Name</div>
-                        <span class="role-name">{{ $doctor->first_name ?? 'N/A' }}</span>
-                    </td>
-                    @for($i = 0; $i < 4; $i++)
-                        <td>
-                            <div class="role-header">Name</div>
-                            <span class="role-name">{{ $caregivers[$i]->name ?? 'N/A' }}</span>
-                        </td>
-                    @endfor
-                </tr>
-            </tbody>
-        </table>
-
-        <h2 style="text-align: center; margin-top: 40px;">Patient Group</h2>
-        <table class="roster-table">
-            <thead>
-                <tr>
-                    <th>Caregiver</th>
-                    <th>Patient Group</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($caregivers as $caregiver)
-                <tr>
-                    <td>{{ $caregiver->name }}</td>
-                    <td>{{ $patientGroup }}</td>
-                </tr>
+                @foreach ($rosterRecord as $record)
+                    <tr>
+                        <td>{{ $record->supervisor }}</td>
+                        <td>{{ $record->doctor }}</td>
+                        <td>{{ $record->caregiver1 }}</td>
+                        <td>{{ $record->caregiver2 }}</td>
+                        <td>{{ $record->caregiver3 }}</td>
+                        <td>{{ $record->caregiver4 }}</td>
+                        <td>{{ $record->groupID }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

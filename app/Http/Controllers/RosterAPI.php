@@ -16,42 +16,11 @@ class RosterAPI
         // Get the current date or the selected date from the request
         $currentDate = $request->query('date', date('Y-m-d'));
     
-        // Fetch the supervisor based on the group_date
-        $supervisor = DB::table('supervisors')
-            ->where('group_date', $currentDate)
-            ->first();
-    
-        if (!$supervisor) {
-            return view('Roster', [
-                'doctor' => null,
-                'caregivers' => [],
-                'supervisor' => null,
-                'patientGroup' => null,
-                'currentDate' => $currentDate,
-            ])->with('error', 'No supervisor available for the selected date.');
-        }
-    
-        // Use the supervisor's groupID to fetch the doctor
-        $doctor = DB::table('doctors')
-            ->where('groupID', $supervisor->groupID)
-            ->first();
-    
-        // Use the supervisor's groupID to fetch the caregivers
-        $caregivers = DB::table('caregivers')
-            ->where('groupID', $supervisor->groupID)
+        $rosterRecord = DB::table('rosters')
+            ->where('date', '=', $currentDate)
             ->get();
-    
-        // Use the supervisor's groupID as the patient group
-        $patientGroup = $supervisor->groupID;
-    
-        // Return the view with the data
-        return view('Roster', [
-            'doctor' => $doctor,
-            'caregivers' => $caregivers,
-            'supervisor' => $supervisor,
-            'patientGroup' => $patientGroup,
-            'currentDate' => $currentDate,
-        ]);
+
+        return view('Roster', ['rosterRecord' => $rosterRecord, 'currentDate' => $currentDate]);
     }
     
 
