@@ -56,10 +56,7 @@
             </tbody>
         </table>
         <button id="backBut">Patient Home</button>
-        <form action="{{ route('make-appointment') }}">
-            @csrf
-            <input type="submit" value="Make Appointment">
-        </form>
+        
     </div>
     <script>
         var backBut = document.getElementById('backBut');

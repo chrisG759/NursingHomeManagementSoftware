@@ -44,6 +44,10 @@
 
             <button type="submit" id="view-details" class="btn btn-primary">View Appointment Details</button>
         </form>
+        <form action="{{ route('make-appointment') }}">
+            @csrf
+            <input type="submit" value="Make Appointment">
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

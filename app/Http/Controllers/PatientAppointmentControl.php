@@ -28,6 +28,13 @@ class PatientAppointmentControl
     }
 
     public function makeAppointment(Request $request){
+        $doctors = DB::table('doctors')
+            ->get();
+
+        return view('makeAppointment', ['doctors' => $doctors]);
+    }
+
+    public function submitAppointment(Request $request){
         
     }
 }
