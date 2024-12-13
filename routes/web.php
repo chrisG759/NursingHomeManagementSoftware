@@ -10,6 +10,76 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\Api\NewRosterController;
 
+Route::prefix('patient')->group(function () {
+    Route::get('/', function () {
+        return view('patient.homepage');
+    })->name('patient.homepage');
+
+    Route::get('/appointment', function () {
+        return view('patient.appointment');
+    })->name('patient.appointment');
+
+    Route::get('/payment', function () {
+        return view('patient.payment');
+    })->name('patient.payment');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/report', function () {
+        return view('admin.report');
+    })->name('admin.report');
+
+    Route::get('/registration-approval', function () {
+        return view('admin.registration-approval');
+    })->name('admin.registration-approval');
+
+    Route::get('/roster', function () {
+        return view('admin.roster');
+    })->name('admin.roster');
+
+    Route::get('/employees', function () {
+        return view('admin.employees');
+    })->name('admin.employees');
+});
+
+Route::prefix('doctor')->group(function () {
+    Route::get('/', function () {
+        return view('doctor.home');
+    })->name('doctor.home');
+
+    Route::get('/appointment', function () {
+        return view('doctor.appointment');
+    })->name('doctor.appointment');
+
+    Route::get('/roster', function () {
+        return view('doctor.roster');
+    })->name('doctor.roster');
+
+    Route::get('/medications', function () {
+        return view('doctor.medications');
+    })->name('doctor.medications');
+});
+
+Route::prefix('caregiver')->group(function () {
+    Route::get('/', function () {
+        return view('caregiver.home');
+    })->name('caregiver.home');
+
+    Route::get('/roster', function () {
+        return view('caregiver.roster');
+    })->name('caregiver.roster');
+});
+
+Route::prefix('family')->group(function () {
+    Route::get('/home', function () {
+        return view('family.home');
+    })->name('family.home');
+
+    Route::get('/payment', function () {
+        return view('family.payment');
+    })->name('family.payment');
+});
+
 Route::get('/roster', function () {
     return view('roster'); 
 })->name('roster');
