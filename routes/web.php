@@ -8,6 +8,15 @@ use App\Http\Controllers\PaymentAPI;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\RosterController;
+use App\Http\Controllers\Api\NewRosterController;
+
+Route::get('/roster', function () {
+    return view('roster'); 
+})->name('roster');
+
+Route::get('/newRoster', function () {
+    return view('newRoster'); 
+})->name('newRoster');
 
 Route::get('/', function(){
     return view('homepage');
