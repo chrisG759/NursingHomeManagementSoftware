@@ -49,6 +49,10 @@ class LoginAPI
             ->where('email', '=', $request->email)
             ->first();
 
+        $patient = DB::table('patients')
+            ->where('email', '=', $request->email)
+            ->first();
+
         if ($employee && ($validated['password'] == $employee->password) && $employee->isValid == true) {
 
             if ($request->has('remember')) {
@@ -68,6 +72,8 @@ class LoginAPI
             }
         } elseif ($family && ($request->password == $family->password)) {
             return redirect(route('family.index'));
+        } elseif ($patient && ($request->password == $patient->password)){
+            return view('PatientHomepage');
         }
 
         return view('login', ['loginInvalid' => true]);

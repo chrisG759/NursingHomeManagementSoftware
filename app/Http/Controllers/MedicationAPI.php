@@ -36,7 +36,7 @@ class MedicationController
 
     public function update(Request $request, $id)
     {
-        $medication=DB::table('medication')
+        $medication=DB::table('medication');
         
         $medication->update([
             'name' => $request->name,
