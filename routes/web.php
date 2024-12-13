@@ -10,6 +10,40 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\RosterController;
 use App\Http\Controllers\Api\NewRosterController;
 
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup');
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::get('/homepage', [HomeController::class, 'index'])->middleware('auth')->name('homepage');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/report', [AdminReportController::class, 'index'])->name('admin.report');
+    Route::get('/admin/employees', [EmployeeController::class, 'index'])->name('admin.employees');
+    Route::get('/admin/registration-approval', [RegistrationApprovalController::class, 'index'])->name('admin.registrationApproval');
+    Route::get('/admin/role-access', [RoleAccessController::class, 'index'])->name('admin.roleAccess');
+});
+
+Route::middleware(['auth', 'role:doctor'])->group(function () {
+    Route::get('/doctor/home', [DoctorHomeController::class, 'index'])->name('doctor.home');
+    Route::get('/doctor/tests', [DoctorTestController::class, 'index'])->name('doctor.tests');
+    Route::get('/doctor/appointments', [DoctorAppointmentController::class, 'index'])->name('doctor.appointments');
+    Route::get('/doctor/patients', [DoctorPatientController::class, 'index'])->name('doctor.patients');
+});
+
+Route::middleware(['auth', 'role:caregiver'])->group(function () {
+    Route::get('/caregiver/home', [CaregiverHomeController::class, 'index'])->name('caregiver.home');
+});
+
+Route::middleware(['auth', 'role:doctor,caregiver'])->group(function () {
+    Route::get('/patients/{id}/edit', [EditPatientController::class, 'edit'])->name('patients.edit');
+    Route::get('/medications', [MedicationController::class, 'index'])->name('medications.index');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
+});
+
 Route::prefix('patient')->group(function () {
     Route::get('/', function () {
         return view('patient.homepage');
